@@ -6,19 +6,26 @@ require('dotenv').config();
 // Create server express
 const app = express();
 
+/*******************
+ * INIT MIDDLEWARES*
+ *******************/
+
 // Config CORS
 app.use(cors());
+
+// Body parser
+app.use(express.json());
+
+/*******************
+ * END MIDDLEWARES*
+ *******************/
 
 // DB connection
 connection();
 
 // Routes
-app.get('/', (req, res) => {
-    res.json({
-        ok: true,
-        msg: 'Hello world'
-    });
-});
+app.use('/api/users', require('./routes/users.routes'));
+app.use('/api/login', require('./routes/auth.routes'));
 
 
 // Launch server
