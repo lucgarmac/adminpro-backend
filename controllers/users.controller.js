@@ -4,11 +4,15 @@ const bcrypt = require('bcryptjs');
 const { generateJWT } = require('../helpers/jwt.helper');
 
 const getUsers = async(req, res) => {
+    const limit = parseInt(req.query.limit, 10) || 5;
+    const offset = parseInt(req.query.offset, 10) || 0;
 
-    
-
-    const users = await User.find({}, 'name email role google');
+    const [users, totalItems] = await Promise.all([
+        User.find({}, 'name email role img google').skip(offset * limit).limit(limit),
+        User.count()
+    ]);
     return res.json({
+        totalItems,
         users,
         userUid: req.userUid
     })
@@ -107,7 +111,7 @@ const deleteUser = async(req, res= response) => {
         });
     } catch (error) {
         return res.status(500).json({
-            msg: 'An error has ocurred when the user updating'
+            msg: 'An error has ocurred when the user deleting'
         });
     }
     
