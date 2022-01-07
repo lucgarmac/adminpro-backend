@@ -16,12 +16,16 @@ app.use(cors());
 // Body parser
 app.use(express.json());
 
+// public directory
+app.use(express.static('public'));
+
 /*******************
  * END MIDDLEWARES*
  *******************/
 
 // DB connection
 connection();
+
 
 // Routes
 app.use('/api/users', require('./routes/users.routes'));

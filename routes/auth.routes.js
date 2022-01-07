@@ -18,4 +18,9 @@ router.post('/', [
     fieldValidations
 ] , authController.login);
 
+router.post('/google', [
+    expressValidator.check('token', 'The token field is mandatory').not().isEmpty(),
+    fieldValidations
+] , authController.loginGoogle);
+
 module.exports = router;
