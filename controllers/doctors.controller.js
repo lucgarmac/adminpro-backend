@@ -76,7 +76,7 @@ const updateDoctor = async(req, res = response) => {
 
         const doctorToUpdate = {
             hospital: hospitalId,
-            user: req.uid,
+            user: req.userUid,
             ...req.body
         }
 

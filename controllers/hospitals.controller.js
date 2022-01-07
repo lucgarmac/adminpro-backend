@@ -2,7 +2,7 @@ const {response} = require('express');
 const Hospital = require('../models/hospital.model');
 
 const getHospitals = async(req, res) => {
-    const hospitals = await Hospital.find({}).populate('user', 'name img');
+    const hospitals = await Hospital.find().populate('user', 'name img');
     return res.json({
         hospitals
     })
@@ -52,7 +52,7 @@ const updateHospital = async(req, res = response) => {
          
         // {new: true} - Get use updated. If remove this option, this operation get old hospital but in DB will be updated.
         const hospitalToUpdate = { 
-            user: req.uid, 
+            user: req.userUid, 
             ...req.body
         };
         const hospitalUpdated = await Hospital.findByIdAndUpdate(id, hospitalToUpdate, { new: true });
