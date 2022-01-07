@@ -10,6 +10,7 @@ const { fieldValidations } = require('../middlewares/field-validations.middlewar
 const router = express.Router();
 // Get controller
 const authController = require('../controllers/auth.controller');
+const { jwtValidation } = require('../middlewares/jwt-validations.middleware');
 
 // Set routes
 router.post('/', [
@@ -22,5 +23,10 @@ router.post('/google', [
     expressValidator.check('token', 'The token field is mandatory').not().isEmpty(),
     fieldValidations
 ] , authController.loginGoogle);
+
+router.get('/renew', [
+    jwtValidation
+] , authController.renewToken);
+
 
 module.exports = router;

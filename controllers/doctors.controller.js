@@ -61,8 +61,28 @@ const updateDoctor = async(req, res = response) => {
         }
          
         // {new: true} - Get use updated. If remove this option, this operation get old doctor but in DB will be updated.
-        const { user, hospital, ...bodyFields} = req.body;
-        const doctorUpdated = await Doctor.findByIdAndUpdate(uid, bodyFields, { new: true });
+        let hospitalId = doctorFound.hospital;
+        const { hospital } = req.body;
+        if(hospital) {
+            const hospitalFound = await Hospital.findById(hospital);
+            if(!hospitalFound) {
+                return res.status(404).json({
+                    msg: 'The hospital no exists!'
+                });
+            } 
+            hospitalId = hospitalFound.id;
+        }
+
+
+        const doctorToUpdate = {
+            hospital: hospitalId,
+            user: req.uid,
+            ...req.body
+        }
+
+        const doctorUpdated = await Doctor.findByIdAndUpdate(uid, doctorToUpdate, { new: true })
+            .populate('user', 'name')
+            .populate('hospital', 'name');
 
         return res.status(200).json({
             doctorUpdated

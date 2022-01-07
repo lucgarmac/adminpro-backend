@@ -24,4 +24,4 @@ const jwtValidation = (req, res, next) => {
 
 module.exports = {
     jwtValidation
-}
+};

@@ -16,7 +16,7 @@ const createHospital = async(req, res = response) => {
         const hospitalFound = await Hospital.findOne({name});
         if(hospitalFound) {
             return res.status(409).json({
-                msg: 'The hospital exists yet!!'
+                msg: 'The hospital exists!!'
             });
         }
 
@@ -43,7 +43,7 @@ const updateHospital = async(req, res = response) => {
     const id = req.params.id;
     try {
 
-        let hospitalFound = await Hospital.findById(id);
+        const hospitalFound = await Hospital.findById(id);
         if(!hospitalFound) {
             return res.status(404).json({
                 msg: 'The hospital no exists!'
@@ -51,8 +51,11 @@ const updateHospital = async(req, res = response) => {
         }
          
         // {new: true} - Get use updated. If remove this option, this operation get old hospital but in DB will be updated.
-        const { user, ...bodyFields} = req.body;
-        const hospitalUpdated = await Hospital.findByIdAndUpdate(id, bodyFields, { new: true });
+        const hospitalToUpdate = { 
+            user: req.uid, 
+            ...req.body
+        };
+        const hospitalUpdated = await Hospital.findByIdAndUpdate(id, hospitalToUpdate, { new: true });
 
         return res.status(200).json({
             hospitalUpdated
