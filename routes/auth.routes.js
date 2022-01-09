@@ -14,7 +14,8 @@ const { jwtValidation } = require('../middlewares/jwt-validations.middleware');
 
 // Set routes
 router.post('/', [
-    expressValidator.check('email', 'The email field is mandatory').isEmail(),
+    expressValidator.check('email', 'The email field is mandatory').not().isEmpty(),
+    expressValidator.check('email', 'The email field format is invalid').isEmail(),
     expressValidator.check('password', 'The password field is mandatory').not().isEmpty(),
     fieldValidations
 ] , authController.login);

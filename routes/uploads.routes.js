@@ -15,7 +15,7 @@ router.use(fileUpload());
  
  // Set routes
  router.patch('/:entity/:id', jwtValidation , uploadsController.uploadFile);
- router.get('/:entity/:img', jwtValidation , uploadsController.showImage);
+ router.get('/:entity/:img' , uploadsController.showImage);
  module.exports = router;
 
  

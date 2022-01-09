@@ -22,7 +22,8 @@ router.post('/', [
 router.put('/:uid', [
     jwtValidation,
     expressValidator.check('name', 'The name field is mandatory').not().isEmpty(),
-    expressValidator.check('email', 'The email field is mandatory').isEmail(),
+    expressValidator.check('email', 'The email field is mandatory').not().isEmpty(),
+    expressValidator.check('email', 'The email field is not valid').isEmail(),
     expressValidator.check('role', 'The role field is mandatory').not().isEmpty(),
     fieldValidations] , userController.updateUser);
 router.delete('/:uid', jwtValidation, userController.deleteUser);

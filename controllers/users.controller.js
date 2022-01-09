@@ -69,6 +69,13 @@ const updateUser = async(req, res = response) => {
 
         const {password, google, email, ...bodyFields} = req.body;
         if(userFound.email !== email) {
+
+            if( userFound.google) {
+                return res.status(400).json({
+                    msg: 'The Google user email can\'t edit'
+                });
+            }
+
             userFound = await User.findOne({email});
             if(userFound) {
                 return res.status(400).json({
@@ -76,6 +83,7 @@ const updateUser = async(req, res = response) => {
                 });
             }
 
+            bodyFields.email = email;
         }
          
         // {new: true} - Get use updated. If remove this option, this operation get old user but in DB will be updated.

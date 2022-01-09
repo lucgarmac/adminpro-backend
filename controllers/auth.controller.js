@@ -80,9 +80,20 @@ const loginGoogle = async(req, res=response) => {
 };
 
 const renewToken = async(req, res = response) => {
+    
+    const userUid = req.userUid;
     // Generate JWT
-    const token = await generateJWT(req.uid);
+    const token = await generateJWT(userUid);
+
+    const userFound = await User.findById(userUid);
+    if(!userFound) {
+        return res.status(400).json({
+            msg: 'Invalid token!!'
+        });
+    }
+
     return res.json({
+        user: userFound,
         token
     });
 };
