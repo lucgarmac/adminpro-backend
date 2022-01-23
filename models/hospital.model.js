@@ -15,7 +15,7 @@ const hospitalSchema = mongoose.Schema({
     }
 }, { collection: 'Hospitals'}); // Name in mongoDB
 
-// Visual config: remove version field and change old field name "_id" by the name "uid"
+// Visual config: remove version field and change old field name "_id" by the name "id"
 hospitalSchema.method('toJSON', function() {
     // Extract version, id, password and object to the original user schema
     const {__v, _id, password, ...object } = this.toObject();

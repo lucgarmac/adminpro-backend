@@ -16,6 +16,9 @@
  router.get('/', 
     jwtValidation,
     doctorController.getDoctors);
+router.get('/:uid', 
+    jwtValidation,
+    doctorController.getDoctor);
  router.post('/', [
     jwtValidation,
     expressValidator.check('name', 'The name field is mandatory').not().isEmpty(),

@@ -5,9 +5,26 @@ const Hospital = require('../models/hospital.model');
 const getDoctors = async(req, res) => {
     const doctors = await Doctor.find({})
         .populate('user', 'name')
-        .populate('hospital', 'name');
+        .populate('hospital', 'name img');
     return res.json({
         doctors
+    })
+};
+
+const getDoctor = async(req, res) => {
+    const uid = req.params.uid;
+
+    const doctorFound = await Doctor.findById(uid)
+                                    .populate('user', 'name')
+                                    .populate('hospital', 'name img');
+    if(!doctorFound) {
+        return res.status(404).json({
+            msg: 'The doctor no exists!'
+        });
+    }
+
+    return res.json({
+        doctor: doctorFound
     })
 };
 
@@ -123,6 +140,7 @@ const deleteDoctor = async(req, res= response) => {
 
 module.exports = {
     getDoctors,
+    getDoctor,
     createDoctor,
     updateDoctor,
     deleteDoctor

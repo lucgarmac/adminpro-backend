@@ -29,7 +29,7 @@ const getDataByEntityAndName = async(req, res) => {
     let result = null;
     switch(entityCriteria) {
         case 'users':
-            result = await User.find({name: criteria}, 'name email role google');
+            result = await User.find({name: criteria}, 'name email role img google');
             break;
         case 'hospitals':
             result = await Hospital.find({name: criteria})
