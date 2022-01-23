@@ -3,6 +3,7 @@ const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const { generateJWT } = require('../helpers/jwt.helper');
 const { verifyGoogleToken } = require('../helpers/validate-google-token.helper');
+const { getMenu } = require('../helpers/menu.helper');
 
 const login = async(req, res=response) => {
 
@@ -26,9 +27,13 @@ const login = async(req, res=response) => {
 
         // Generate JWT
         const token = await generateJWT(userFound.id);
+
+        // Get menu user
+        const menu = getMenu(userFound.role);
         
         return res.json({
-            token
+            token,
+            menu
         });
     } catch (error) {
         return res.status(500).json({
@@ -67,10 +72,14 @@ const loginGoogle = async(req, res=response) => {
 
         // Generate JWT
         const newToken = await generateJWT(userObj.id);
-        
+
+        // Get menu user
+        const menu = getMenu(userFound.role);
+
         return res.json({
             user: userObj,
-            token: newToken
+            token: newToken,
+            menu
         });
     } catch (error) {
         return res.status(500).json({
@@ -92,9 +101,13 @@ const renewToken = async(req, res = response) => {
         });
     }
 
+    // Get menu user
+    const menu = getMenu(userFound.role);
+
     return res.json({
         user: userFound,
-        token
+        token,
+        menu
     });
 };
 
