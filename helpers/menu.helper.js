@@ -5,20 +5,19 @@ const getMenu = (role) => {
             title: 'Main',
             icon: 'mdi mdi-gauge',
             children: [
-                { title: 'Dashboard', path: '/' },
-                { title: 'Progress bar', path: 'progress' },
-                { title: 'Charts', path: 'charts' },
-                { title: 'Promises', path: 'promises' },
-                { title: 'Rxjs', path: 'rxjs' }
+                { title: 'Progress bar', path: 'main/progress' },
+                { title: 'Charts', path: 'main/charts' },
+                { title: 'Promises', path: 'main/promises' },
+                { title: 'Rxjs', path: 'main/rxjs' }
             ]
         },
         {
             title: 'Management',
             icon: 'mdi mdi-folder-lock-open',
             children: [
-                { title: 'Users', path: 'users' },
-                { title: 'Hospitals', path: 'hospitals' },
-                { title: 'Doctors', path: 'doctors' },
+                { title: 'Users', path: 'management/users' },
+                { title: 'Hospitals', path: 'management/hospitals' },
+                { title: 'Doctors', path: 'management/doctors' },
             ]
         }
     ];
