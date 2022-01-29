@@ -36,6 +36,7 @@ app.use('/api/search', require('./routes/searchs.routes'));
 app.use('/api/upload', require('./routes/uploads.routes'));
 app.use('/api/login', require('./routes/auth.routes'));
 
+// Redirect to index when refresh page
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/index.html'));
 })
